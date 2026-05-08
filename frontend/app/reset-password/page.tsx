@@ -65,11 +65,7 @@ export default function ResetPasswordPage() {
     setIsLoading(true);
     
     try {
-      const baseUrl = (
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
-      ).replace(/\/+$/, "");
-      
-      const response = await fetch(`${baseUrl}/api/auth/reset-password`, {
+      const response = await fetch(`/api-proxy/api/auth/reset-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

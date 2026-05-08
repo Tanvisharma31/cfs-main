@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+// All API calls go through the Next.js proxy route (/api-proxy/...).
+// The real backend URL is in the server-only BACKEND_URL env var — never sent to the browser.
+const API_BASE_URL = '/api-proxy';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

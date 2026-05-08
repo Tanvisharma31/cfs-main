@@ -7,10 +7,9 @@ import axios, {
 } from "axios";
 import { jwtDecode } from "jwt-decode";
 
-// Define the base URL for the API (normalize to avoid trailing slash issues)
-const RAW_API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
-const API_BASE_URL = RAW_API_BASE_URL.replace(/\/+$/, "");
+// All API calls go through the Next.js proxy route (/api-proxy/...).
+// The real backend URL is in the server-only BACKEND_URL env var — never sent to the browser.
+const API_BASE_URL = "/api-proxy";
 
 const createUrl = (path: string) =>
   `${API_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;

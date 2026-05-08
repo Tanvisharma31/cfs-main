@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+const API_BASE_URL = "/api-proxy";
 
 /**
  * Constructs the proper avatar URL based on the stored avatarUrl value

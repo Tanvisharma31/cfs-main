@@ -92,7 +92,7 @@ export default function AdminReportSection({ reports, formId, formType, title = 
         // Download file - the backend will set the correct Content-Disposition header with original filename
         // We'll extract the filename from the response headers
         const token = localStorage.getItem("token");
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/admin/forms/${formId}/documents/${documentId}`, {
+        const response = await fetch(`/api-proxy/api/admin/forms/${formId}/documents/${documentId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

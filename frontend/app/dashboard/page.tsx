@@ -47,7 +47,7 @@ import api from "@/lib/api-client";
 import { EnhancedFooter } from "@/components/enhanced-footer";
 import { maskAadhaar } from "@/lib/utils";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+const API_BASE_URL = "/api-proxy";
 
 // --- [NEW] Flipkart-Style Order Status Tracker Component ---
 const OrderStatusTracker = ({

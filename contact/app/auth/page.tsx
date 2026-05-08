@@ -53,8 +53,7 @@ export default function LoginPage() {
 
     setIsRequestingOTP(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
-      const response = await fetch(`${apiUrl}/api/support-team/forgot-password`, {
+      const response = await fetch(`/api-proxy/api/support-team/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,8 +83,7 @@ export default function LoginPage() {
 
     setIsVerifyingOTP(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
-      const response = await fetch(`${apiUrl}/api/support-team/verify-otp`, {
+      const response = await fetch(`/api-proxy/api/support-team/verify-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,8 +123,7 @@ export default function LoginPage() {
 
     setIsResettingPassword(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
-      const response = await fetch(`${apiUrl}/api/support-team/reset-password`, {
+      const response = await fetch(`/api-proxy/api/support-team/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

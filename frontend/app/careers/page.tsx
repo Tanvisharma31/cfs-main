@@ -24,7 +24,8 @@ type Job = {
   closingDate?: string | null;
 };
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001").replace(/\/+$/, "");
+// Server Component: uses server-only BACKEND_URL — never sent to the client bundle.
+const API_BASE = (process.env.BACKEND_URL || "http://localhost:5001").replace(/\/+$/, "");
 
 async function getJobs(): Promise<Job[]> {
   const res = await fetch(`${API_BASE}/api/jobs`, { cache: "no-store" });

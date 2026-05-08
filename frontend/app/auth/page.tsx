@@ -170,10 +170,7 @@ export default function AuthPage() {
     }
 
     try {
-      const baseUrl = (
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
-      ).replace(/\/+$/, "");
-      await fetch(`${baseUrl}/api/auth/request-password-reset`, {
+      await fetch(`/api-proxy/api/auth/request-password-reset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: loginForm.emailOrPan }),
