@@ -8,7 +8,7 @@ import axios, {
 import { jwtDecode } from "jwt-decode";
 
 // All API calls go through the Next.js proxy route (/api-proxy/...).
-// The real backend URL is in the server-only BACKEND_URL env var — never sent to the browser.
+// The real backend URL is in the server-only NEXT_PUBLIC_API_URL env var — never sent to the browser.
 const API_BASE_URL = "/api-proxy";
 
 const createUrl = (path: string) =>

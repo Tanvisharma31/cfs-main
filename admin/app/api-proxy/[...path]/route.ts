@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// BACKEND_URL is a server-only env var (no NEXT_PUBLIC_ prefix).
+// NEXT_PUBLIC_API_URL is a server-only env var (no NEXT_PUBLIC_ prefix).
 // It is never shipped to the client bundle, so the EC2 IP stays hidden.
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:5001";
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 
 async function handler(
   req: NextRequest,
@@ -12,7 +12,7 @@ async function handler(
 
   // Reconstruct the target URL: strip /api-proxy and forward the rest
   const targetPath = `/${path.join("/")}`;
-  const targetUrl = `${BACKEND_URL}${targetPath}${req.nextUrl.search}`;
+  const targetUrl = `${NEXT_PUBLIC_API_URL}${targetPath}${req.nextUrl.search}`;
 
   // Forward all headers except host (which must match the target server)
   const forwardedHeaders = new Headers(req.headers);
