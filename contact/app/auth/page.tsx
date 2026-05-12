@@ -38,8 +38,9 @@ export default function LoginPage() {
       await login(email, password);
       toast.success("Login successful!");
       router.push("/");
-    } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || "Login failed";
+    } catch (err) {
+      const error = err as any;
+      const errorMessage = error.response?.data?.message || error.message || "Login failed";
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -63,8 +64,8 @@ export default function LoginPage() {
       } else {
         toast.error(response.data.message || "Failed to send OTP");
       }
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "Failed to send OTP. Please try again.");
+    } catch (err) {
+      toast.error((err as any).response?.data?.message || "Failed to send OTP. Please try again.");
     } finally {
       setIsRequestingOTP(false);
     }
@@ -86,8 +87,8 @@ export default function LoginPage() {
       } else {
         toast.error(response.data.message || "Invalid OTP");
       }
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "Failed to verify OTP. Please try again.");
+    } catch (err) {
+      toast.error((err as any).response?.data?.message || "Failed to verify OTP. Please try again.");
     } finally {
       setIsVerifyingOTP(false);
     }
@@ -128,8 +129,8 @@ export default function LoginPage() {
       } else {
         toast.error(response.data.message || "Failed to reset password");
       }
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "Failed to reset password. Please try again.");
+    } catch (err) {
+      toast.error((err as any).response?.data?.message || "Failed to reset password. Please try again.");
     } finally {
       setIsResettingPassword(false);
     }

@@ -290,7 +290,14 @@ export function ContactRepliesDashboard({
 
       {/* Contact List */}
       <div className="space-y-4">
-        {contacts.length === 0 ? (
+        {isLoading ? (
+          <Card>
+            <CardContent className="p-12 text-center">
+              <Loader2 className="h-12 w-12 text-blue-500 animate-spin mx-auto mb-4" />
+              <p className="text-gray-600">Loading support requests...</p>
+            </CardContent>
+          </Card>
+        ) : contacts.length === 0 ? (
           <Card>
             <CardContent className="p-12 text-center">
               <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />

@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { MessageSquare, Search, Clock, Menu, X } from 'lucide-react';
+import { MessageSquare, Search, Clock, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Chat {
