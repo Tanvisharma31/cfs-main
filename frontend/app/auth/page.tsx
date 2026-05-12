@@ -20,6 +20,7 @@ import { FadeInSection } from "@/components/fade-in-section";
 import { AnimatedBackground } from "@/components/animated-background";
 import { useAuth } from "@/providers/auth-provider";
 import { toast } from "sonner";
+import api, { API_PATHS } from "@/lib/api-client";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -170,10 +171,8 @@ export default function AuthPage() {
     }
 
     try {
-      await fetch(`/api-proxy/api/auth/request-password-reset`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginForm.emailOrPan }),
+      await api.post(API_PATHS.AUTH.REQUEST_PASSWORD_RESET, {
+        email: loginForm.emailOrPan,
       });
 
       toast.success(

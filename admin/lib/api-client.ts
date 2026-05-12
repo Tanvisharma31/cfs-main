@@ -12,7 +12,7 @@ import { jwtDecode } from "jwt-decode";
 const API_BASE_URL = "/api-proxy";
 
 const createUrl = (path: string) =>
-  `${API_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+  path.startsWith("/") ? path : `/${path}`;
 
 // Define API paths
 export const API_PATHS = {

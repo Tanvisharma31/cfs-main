@@ -13,8 +13,7 @@ const API_BASE_URL = "/api-proxy";
 
 // Create a function to generate API paths
 const createUrl = (path: string) => {
-  const cleanPath = path.startsWith("/") ? path : `/${path}`;
-  return `${API_BASE_URL}${cleanPath}`;
+  return path.startsWith("/") ? path : `/${path}`;
 };
 
 // Define API paths

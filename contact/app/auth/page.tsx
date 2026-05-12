@@ -10,6 +10,8 @@ import { Building2, Mail, Lock, Loader2, AlertCircle, KeyRound } from "lucide-re
 import { toast } from "sonner";
 import { useAuth } from "@/providers/auth-provider";
 
+import api from "@/lib/api-client";
+
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
@@ -36,8 +38,8 @@ export default function LoginPage() {
       await login(email, password);
       toast.success("Login successful!");
       router.push("/");
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Login failed";
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || err.message || "Login failed";
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -53,23 +55,16 @@ export default function LoginPage() {
 
     setIsRequestingOTP(true);
     try {
-      const response = await fetch(`/api-proxy/api/support-team/forgot-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await api.post(`/api/support-team/forgot-password`, { email });
 
-      const data = await response.json();
-      if (data.success) {
+      if (response.data.success) {
         toast.success("OTP sent to your email. Please check your inbox.");
         setOtpSent(true);
       } else {
-        toast.error(data.message || "Failed to send OTP");
+        toast.error(response.data.message || "Failed to send OTP");
       }
-    } catch {
-      toast.error("Failed to send OTP. Please try again.");
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to send OTP. Please try again.");
     } finally {
       setIsRequestingOTP(false);
     }
@@ -83,23 +78,16 @@ export default function LoginPage() {
 
     setIsVerifyingOTP(true);
     try {
-      const response = await fetch(`/api-proxy/api/support-team/verify-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, otp }),
-      });
+      const response = await api.post(`/api/support-team/verify-otp`, { email, otp });
 
-      const data = await response.json();
-      if (data.success) {
-        setResetToken(data.token);
+      if (response.data.success) {
+        setResetToken(response.data.token);
         toast.success("OTP verified successfully. Please set your new password.");
       } else {
-        toast.error(data.message || "Invalid OTP");
+        toast.error(response.data.message || "Invalid OTP");
       }
-    } catch {
-      toast.error("Failed to verify OTP. Please try again.");
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to verify OTP. Please try again.");
     } finally {
       setIsVerifyingOTP(false);
     }
@@ -123,20 +111,13 @@ export default function LoginPage() {
 
     setIsResettingPassword(true);
     try {
-      const response = await fetch(`/api-proxy/api/support-team/reset-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: resetToken,
-          newPassword,
-          confirmPassword,
-        }),
+      const response = await api.post(`/api/support-team/reset-password`, {
+        token: resetToken,
+        newPassword,
+        confirmPassword,
       });
 
-      const data = await response.json();
-      if (data.success) {
+      if (response.data.success) {
         toast.success("Password reset successfully! Please login with your new password.");
         setShowForgotPassword(false);
         setOtp("");
@@ -145,10 +126,10 @@ export default function LoginPage() {
         setResetToken("");
         setOtpSent(false);
       } else {
-        toast.error(data.message || "Failed to reset password");
+        toast.error(response.data.message || "Failed to reset password");
       }
-    } catch {
-      toast.error("Failed to reset password. Please try again.");
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to reset password. Please try again.");
     } finally {
       setIsResettingPassword(false);
     }
