@@ -12,7 +12,9 @@ async function handler(
   const { path } = await params;
 
   // Reconstruct the target URL: strip /api-proxy and forward the rest
-  const targetPath = `/${path.join("/")}`;
+  // If the path starts with 'api-proxy' (due to double prefixing), remove it
+  const filteredPath = path[0] === "api-proxy" ? path.slice(1) : path;
+  const targetPath = `/${filteredPath.join("/")}`;
   const targetUrl = `${BACKEND_URL}${targetPath}${req.nextUrl.search}`;
 
   // Forward all headers except host (which must match the target server)
@@ -47,7 +49,11 @@ async function handler(
   } catch (error) {
     console.error("[api-proxy] Failed to reach backend:", error);
     return NextResponse.json(
-      { message: "Failed to connect to backend service." },
+      { 
+        message: "Failed to connect to backend service.",
+        targetUrl,
+        error: error instanceof Error ? error.message : String(error)
+      },
       { status: 502 }
     );
   }
